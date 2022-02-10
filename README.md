@@ -57,3 +57,7 @@ const resolvers = {
 ```
 
 This way the supergraph thats called the match graphql subgraph knows where to go next for its data and the keys are already present to fetch it.
+
+## What about the elixir GraphQL API...
+
+Well I haven't found out how todo this nicely with apollo in my 1 day timebox, but did come across [this interesting article](https://stepzen.com/blog/schema-stitching-and-federation-not-the-best-solutions-for-graphql-microservices) which is a service that allows even easier stitching of graphql services by using directives for rest and graphql services instead of having apollo subgraphs everywhere, its a worthwhile read. https://stepzen.com/blog/schema-stitching-and-federation-not-the-best-solutions-for-graphql-microservices
