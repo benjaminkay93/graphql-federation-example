@@ -31,7 +31,9 @@ const resolvers = {
       return await fetch(`${restBaseUrl}/user/${userId}`)
     },
     statusUser: async () => {
-      return await fetch(`${restBaseUrl}/`)
+      const response = await fetch(`${restBaseUrl}/`)
+
+      return await response.text();
     }
   },
   Mutation: {

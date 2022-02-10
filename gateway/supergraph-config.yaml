@@ -1,0 +1,9 @@
+subgraphs:
+  user:
+    routing_url: http://localhost:5562/graphql
+    schema:
+      subgraph_url: http://localhost:5562/graphql
+  valorant:
+    routing_url: http://localhost:5552/graphql
+    schema:
+      subgraph_url: http://localhost:5552/graphql

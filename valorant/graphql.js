@@ -41,7 +41,9 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     statusValorant: async () => {
-      return await fetch(`${restBaseUrl}/`)
+      const response = await fetch(`${restBaseUrl}/`)
+
+      return await response.text();
     },
     userValorantDetails: async (_, {id}) => {
       const shards = await fetch(`${restBaseUrl}/connect-user`)

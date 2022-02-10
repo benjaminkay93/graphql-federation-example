@@ -1,0 +1,79 @@
+schema
+  @core(feature: "https://specs.apollo.dev/core/v0.2"),
+  @core(feature: "https://specs.apollo.dev/join/v0.1", for: EXECUTION)
+{
+  query: Query
+  mutation: Mutation
+}
+
+directive @core(as: String, feature: String!, for: core__Purpose) repeatable on SCHEMA
+
+directive @join__field(graph: join__Graph, provides: join__FieldSet, requires: join__FieldSet) on FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__owner(graph: join__Graph!) on INTERFACE | OBJECT
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on INTERFACE | OBJECT
+
+type Mutation {
+  updateUser(balance: Int!, id: ID!): User @join__field(graph: USER)
+  updateValorantUserTag(id: Int!, name: String!, tag: String!): ValorantTag @join__field(graph: VALORANT)
+}
+
+type Query {
+  me: User @join__field(graph: USER)
+  statusUser: String @join__field(graph: USER)
+  statusValorant: String @join__field(graph: VALORANT)
+  user(id: ID!): User @join__field(graph: USER)
+  userValorantDetails(id: Int!): ValorantUser @join__field(graph: VALORANT)
+}
+
+type User
+  @join__owner(graph: USER)
+  @join__type(graph: USER, key: "id")
+{
+  balance: Int @join__field(graph: USER)
+  id: ID! @join__field(graph: USER)
+}
+
+type ValorantMatch {
+  isCompleted: Boolean!
+  isRanked: Boolean!
+  matchId: String!
+  startTime: String!
+}
+
+type ValorantShard {
+  refinedMatchHistoryForShard: [ValorantMatch]!
+  shard: String!
+}
+
+type ValorantTag {
+  name: String!
+  tag: String!
+}
+
+type ValorantUser {
+  id: Int
+  shards: [ValorantShard]!
+}
+
+enum core__Purpose {
+  """
+  `EXECUTION` features provide metadata necessary to for operation execution.
+  """
+  EXECUTION
+
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  USER @join__graph(name: "user" url: "http://localhost:5562/graphql")
+  VALORANT @join__graph(name: "valorant" url: "http://localhost:5552/graphql")
+}

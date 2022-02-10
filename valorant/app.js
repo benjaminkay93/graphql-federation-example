@@ -6,6 +6,7 @@ const port = 5551
 app.use(express.json());
 app.use('/valorant', valorant);
 app.get('/', (req, res) => {
+  console.log('request is here: valorant')
   res.send('valorant api')
 })
 

@@ -1,0 +1,16 @@
+{
+  "name": "foo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./graphql.js"
+  },
+  "dependencies": {
+    "@apollo/gateway": "^0.48.0",
+    "apollo-server": "^3.6.3",
+    "graphql": "15"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
