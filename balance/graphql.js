@@ -10,7 +10,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    updateBalance(id: Int!, username: String!): User 
+    updateBalance(id: Int!, balance: Int!): User 
   }
 
   extend type User @key(fields: "id") {
@@ -30,12 +30,14 @@ const resolvers = {
   Mutation: {
     updateBalance: async (_, args) => {
       const {id, balance} = args
-      const stream = await fetch(`${restBaseUrl}/user/update/${id}`, {
+      const stream = await fetch(`${restBaseUrl}/balance/update/${id}`, {
         method: 'post',
         body: JSON.stringify({balance}),
         headers: {'Content-Type': 'application/json'}
       })
-      return await stream.json()
+      const data = await stream.json()
+      console.log('data', data)
+      return data
     }
   },
   User: {
