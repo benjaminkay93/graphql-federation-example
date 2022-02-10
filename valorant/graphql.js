@@ -46,7 +46,8 @@ const resolvers = {
       return await response.text();
     },
     userValorantDetails: async (_, {id}) => {
-      const shards = await fetch(`${restBaseUrl}/connect-user`)
+      const shardsStream = await fetch(`${restBaseUrl}/valorant/connect-user`)
+      const shards = await shardsStream.json();
 
       return {
         shards,
@@ -56,11 +57,15 @@ const resolvers = {
   },
   Mutation: {
     updateValorantUserTag: async (_, {name, tag}) => {
-      return await fetch(`${restBaseUrl}/update-user`, {
+      const stream = await fetch(`${restBaseUrl}/valorant/update-user`, {
         method: 'post',
-        body: JSON.stringify({balance}),
+        body: JSON.stringify({name, tag}),
         headers: {'Content-Type': 'application/json'}
       })
+      
+      const data = await stream.json()
+
+      return data
     },
   },
 }

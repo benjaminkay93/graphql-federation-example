@@ -7,16 +7,16 @@ const restBaseUrl = 'http://localhost:5561'
 const typeDefs = gql`
   type Query {
     me: User
-    user(id: ID!): User 
+    user(id: Int!): User 
     statusUser: String
   }
 
   type Mutation {
-    updateUser(id: ID!, balance: Int!): User 
+    updateUser(id: Int!, balance: Int!): User 
   }
 
   type User @key(fields: "id") {
-    id: ID!
+    id: Int!
     balance: Int
   }
 `;

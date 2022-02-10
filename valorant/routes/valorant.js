@@ -46,6 +46,8 @@ router.get('/connect-user', function(req, res) {
 
     return {shard, refinedMatchHistoryForShard}
   })
+
+  console.log('request to /valorant/connect-user', {name, tag})
   
   res.send(response);
 });
@@ -53,9 +55,7 @@ router.get('/connect-user', function(req, res) {
 
 router.post('/update-user', function(request, response) {
   const {name, tag} = request.body
-
-  console.log({name, tag})
-  
+  console.log('request to /valorant/update-user', {name, tag})
   response.send(request.body);
 });
 
