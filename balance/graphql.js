@@ -2,60 +2,57 @@ const { ApolloServer, gql } = require('apollo-server');
 const { buildSubgraphSchema } = require('@apollo/subgraph');
 const fetch = require('node-fetch');
 
-const restBaseUrl = 'http://localhost:5561'
+const restBaseUrl = 'http://localhost:5571'
 
 const typeDefs = gql`
   type Query {
-    me: User
-    user(id: Int!): User 
-    statusUser: String
+    statusBalance: String
   }
 
   type Mutation {
-    updateUser(id: Int!, username: String!): User 
+    updateBalance(id: Int!, username: String!): User 
   }
 
-  type User @key(fields: "id") {
-    id: Int!
-    username: String!
+  extend type User @key(fields: "id") {
+    id: Int! @external
+    balance: Int!
   }
 `;
 
 const resolvers = {
   Query: {
-    me: async () => {
-      const stream = await fetch(`${restBaseUrl}/user/17`)
-      return await stream.json();
-    },
-    user: async (_, args) => {
-      const {id: userId} = args
-      const stream = await fetch(`${restBaseUrl}/user/${userId}`)
-
-      return await stream.json()
-    },
-    statusUser: async () => {
+    statusBalance: async () => {
       const response = await fetch(`${restBaseUrl}/`)
 
       return await response.text();
     }
   },
   Mutation: {
-    updateUser: async (_, args) => {
-      const {id: userId, username} = args
-      const stream = await fetch(`${restBaseUrl}/user/update/${userId}`, {
+    updateBalance: async (_, args) => {
+      const {id, balance} = args
+      const stream = await fetch(`${restBaseUrl}/user/update/${id}`, {
         method: 'post',
-        body: JSON.stringify({username}),
+        body: JSON.stringify({balance}),
         headers: {'Content-Type': 'application/json'}
       })
       return await stream.json()
     }
   },
+  User: {
+    balance: async (_, args) => {
+      const {id} = args
+      const stream = await fetch(`${restBaseUrl}/balance/${id}`)
+      const { balance } = await stream.json()
+
+      return balance
+    }
+  }
 }
 
 const server = new ApolloServer({
   schema: buildSubgraphSchema({ typeDefs, resolvers })
 });
 
-server.listen(5562).then(({ url }) => {
+server.listen(5572).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
 });

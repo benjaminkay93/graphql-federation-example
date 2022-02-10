@@ -17,12 +17,14 @@ directive @join__owner(graph: join__Graph!) on INTERFACE | OBJECT
 directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on INTERFACE | OBJECT
 
 type Mutation {
+  updateBalance(id: Int!, username: String!): User @join__field(graph: BALANCE)
   updateUser(id: Int!, username: String!): User @join__field(graph: USER)
   updateValorantUserTag(id: Int!, name: String!, tag: String!): ValorantTag @join__field(graph: VALORANT)
 }
 
 type Query {
   me: User @join__field(graph: USER)
+  statusBalance: String @join__field(graph: BALANCE)
   statusUser: String @join__field(graph: USER)
   statusValorant: String @join__field(graph: VALORANT)
   user(id: Int!): User @join__field(graph: USER)
@@ -32,7 +34,9 @@ type Query {
 type User
   @join__owner(graph: USER)
   @join__type(graph: USER, key: "id")
+  @join__type(graph: BALANCE, key: "id")
 {
+  balance: Int! @join__field(graph: BALANCE)
   id: Int! @join__field(graph: USER)
   username: String! @join__field(graph: USER)
 }
@@ -74,6 +78,7 @@ enum core__Purpose {
 scalar join__FieldSet
 
 enum join__Graph {
+  BALANCE @join__graph(name: "balance" url: "http://localhost:5572/graphql")
   USER @join__graph(name: "user" url: "http://localhost:5562/graphql")
   VALORANT @join__graph(name: "valorant" url: "http://localhost:5552/graphql")
 }

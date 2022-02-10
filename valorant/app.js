@@ -7,7 +7,7 @@ app.use(express.json());
 app.use('/valorant', valorant);
 app.get('/', (req, res) => {
   console.log('request is here: valorant')
-  res.send('valorant api')
+  res.send('200 OK - valorant api')
 })
 
 app.listen(port, () => {

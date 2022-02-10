@@ -7,3 +7,7 @@ subgraphs:
     routing_url: http://localhost:5552/graphql
     schema:
       subgraph_url: http://localhost:5552/graphql
+  balance:
+    routing_url: http://localhost:5572/graphql
+    schema:
+      subgraph_url: http://localhost:5572/graphql

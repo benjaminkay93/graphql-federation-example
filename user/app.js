@@ -7,7 +7,7 @@ app.use(express.json());
 app.use('/user', user);
 app.get('/', (req, res) => {
   console.log('request is here: user')
-  res.send('user api')
+  res.send('200 OK - user api')
 })
 
 app.listen(port, () => {
