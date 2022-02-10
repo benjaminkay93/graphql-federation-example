@@ -37,7 +37,7 @@ const resolvers = {
       })
       const data = await stream.json()
       console.log('data', data)
-      return data
+      return {id}
     }
   },
   User: {

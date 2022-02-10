@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/:userId', (request, response) => {
+  console.log('USER RE REQUESTD!!!!!')
   response.send({
     id: request.params.userId,
     username: 'abcdefg',

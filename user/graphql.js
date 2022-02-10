@@ -50,6 +50,12 @@ const resolvers = {
       return await stream.json()
     }
   },
+  User: {
+    __resolveReference: async ({id}) => {
+      const stream = await fetch(`${restBaseUrl}/user/${id}`)
+      return await stream.json()
+    }
+  }
 }
 
 const server = new ApolloServer({
