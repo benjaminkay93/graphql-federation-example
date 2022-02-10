@@ -4,16 +4,16 @@ const router = express.Router();
 router.get('/:userId', (request, response) => {
   response.send({
     id: request.params.userId,
-    username: 'abcdefg',
+    balance: Math.floor(Math.random() * 10000),
   })
 })
 
 router.post('/update/:userId', (request, response) => {
-  const {username} = request.body
+  const {balance} = request.body
 
   const responseBody = {
     id: request.params.userId,
-    username: username,
+    balance,
   }
 
   console.log(responseBody)

@@ -17,7 +17,7 @@ directive @join__owner(graph: join__Graph!) on INTERFACE | OBJECT
 directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on INTERFACE | OBJECT
 
 type Mutation {
-  updateUser(balance: Int!, id: Int!): User @join__field(graph: USER)
+  updateUser(id: Int!, username: String!): User @join__field(graph: USER)
   updateValorantUserTag(id: Int!, name: String!, tag: String!): ValorantTag @join__field(graph: VALORANT)
 }
 
@@ -33,8 +33,8 @@ type User
   @join__owner(graph: USER)
   @join__type(graph: USER, key: "id")
 {
-  balance: Int @join__field(graph: USER)
   id: Int! @join__field(graph: USER)
+  username: String! @join__field(graph: USER)
 }
 
 type ValorantMatch {
